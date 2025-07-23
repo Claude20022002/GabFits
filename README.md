@@ -32,7 +32,7 @@ fitzone-app/
 │   ├── utils/
 │   │   └── generateToken.js       # JWT
 │   ├── app.js                     # App Express principale
-│   └── server.js                  # Démarrage du serveur
+│   └── index.js                  # Démarrage du serveur
 │   ├── .env
 │   ├── package.json
 │   └── README.md
