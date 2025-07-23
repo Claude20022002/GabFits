@@ -71,7 +71,7 @@ backend/
 
 ### Course
 
--   **Champs** : id, title, description, coachId, schedule, capacity
+-   **Champs** : id, title, description, coachId, price, schedule, capacity
 -   **Relations** : coach, réservations
 
 ### Booking
