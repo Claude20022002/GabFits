@@ -15,11 +15,9 @@ module.exports = (req, res, next) => {
             .json({ message: "La date de réservation est invalide." });
     }
     if (bookingDate && new Date(bookingDate) < new Date()) {
-        return res
-            .status(400)
-            .json({
-                message: "La date de réservation doit être dans le futur.",
-            });
+        return res.status(400).json({
+            message: "La date de réservation doit être dans le futur.",
+        });
     }
     // Vérifie le statut si fourni
     const allowedStatus = ["pending", "confirmed", "cancelled"];
