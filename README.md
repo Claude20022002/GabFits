@@ -89,8 +89,8 @@ fitzone-app/
 
 ## Technologies utilisées
 
--   **React JS** pour le front-end
--   **Node JS** pour le backend
+-   **React JS + MUI + TanStack (Query, Table, Router) + Axios + React Router** pour le front-end
+-   **Node JS + Express + JWT + ORM ou ODM (Mongoose ou Sequelize ou node-oracledb)** pour le backend
 -   **MongoDb** pour la base de donnée
 
 ---
