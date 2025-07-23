@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 // Import routes
 const userRoutes = require("./routes/userRoute");
+const courseRoutes = require("./routes/courseRoute");
 
 const app = express();
 app.use(cors());
@@ -13,5 +14,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/courses", courseRoutes);
 
 module.exports = app;
