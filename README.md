@@ -90,6 +90,8 @@ fitzone-app/
 ## Technologies utilisées
 
 -   **React JS** pour le front-end
+-   **Node JS** pour le backend
+-   **MongoDb** pour la base de donnée
 
 ---
 
