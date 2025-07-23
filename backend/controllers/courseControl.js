@@ -3,13 +3,13 @@ const Course = require("../models/courseModel");
 // Fonction pour créer un nouveau cours
 exports.createCourse = async (req, res) => {
     const { title, description, schedule, price, capacity } = req.body;
-    const coach = req.user.id; // Utiliser l'ID de l'utilisateur connecté comme coach
+    const coachId = req.user.id; // Utiliser l'ID de l'utilisateur connecté comme coach
 
     try {
         const newCourse = new Course({
             title,
             description,
-            coach,
+            coachId,
             schedule,
             price,
             capacity,
@@ -27,11 +27,10 @@ exports.createCourse = async (req, res) => {
         });
     }
 };
-
 // Fonction pour obtenir tous les cours
 exports.getAllCourses = async (req, res) => {
     try {
-        const courses = await Course.find().populate("coach", "name email");
+        const courses = await Course.find().populate("coachId", "name email");
         res.status(200).json({
             message: "Liste des cours récupérée avec succès.",
             courses,
@@ -49,7 +48,7 @@ exports.getCourseById = async (req, res) => {
 
     try {
         const course = await Course.findById(courseId).populate(
-            "coach",
+            "coachId",
             "name email"
         );
         if (!course) {
@@ -127,7 +126,7 @@ exports.searchCourses = async (req, res) => {
     try {
         const courses = await Course.find({
             title: { $regex: query, $options: "i" }, // Recherche insensible à la casse
-        }).populate("coach", "name email");
+        }).populate("coachId", "name email");
 
         res.status(200).json({
             message: "Résultats de la recherche récupérés avec succès.",
@@ -145,8 +144,8 @@ exports.getCoursesByCoach = async (req, res) => {
     const coachId = req.params.coachId;
 
     try {
-        const courses = await Course.find({ coach: coachId }).populate(
-            "coach",
+        const courses = await Course.find({ coachId: coachId }).populate(
+            "coachId",
             "name email"
         );
 
@@ -178,7 +177,7 @@ exports.getUpcomingCourses = async (req, res) => {
         const upcomingCourses = await Course.find({
             schedule: { $gte: currentDate },
         })
-            .populate("coach", "name email")
+            .populate("coachId", "name email")
             .sort({ schedule: 1 }); // Tri par date de début
 
         if (upcomingCourses.length === 0) {
@@ -209,7 +208,7 @@ exports.getPastCourses = async (req, res) => {
         const pastCourses = await Course.find({
             schedule: { $lt: currentDate },
         })
-            .populate("coach", "name email")
+            .populate("coachId", "name email")
             .sort({ schedule: -1 }); // Tri par date de fin
 
         if (pastCourses.length === 0) {
@@ -239,7 +238,7 @@ exports.getCoursesByPrice = async (req, res) => {
     try {
         const courses = await Course.find({
             price: { $gte: minPrice || 0, $lte: maxPrice || Number.MAX_VALUE },
-        }).populate("coach", "name email");
+        }).populate("coachId", "name email");
 
         if (courses.length === 0) {
             return res.status(404).json({
@@ -272,7 +271,7 @@ exports.getCoursesByCapacity = async (req, res) => {
                 $gte: minCapacity || 0,
                 $lte: maxCapacity || Number.MAX_VALUE,
             },
-        }).populate("coach", "name email");
+        }).populate("coachId", "name email");
 
         if (courses.length === 0) {
             return res.status(404).json({
@@ -309,7 +308,7 @@ exports.getCoursesByCreationDate = async (req, res) => {
         }
 
         const courses = await Course.find(query)
-            .populate("coach", "name email")
+            .populate("coachId", "name email")
             .sort({ createdAt: -1 });
 
         if (courses.length === 0) {
@@ -340,7 +339,7 @@ exports.getCoursesByDescription = async (req, res) => {
     try {
         const courses = await Course.find({
             description: { $regex: query, $options: "i" }, // Recherche insensible à la casse
-        }).populate("coach", "name email");
+        }).populate("coachId", "name email");
 
         if (courses.length === 0) {
             return res.status(404).json({
@@ -368,9 +367,9 @@ exports.getCoursesByCoachName = async (req, res) => {
     const { coachName } = req.query;
 
     try {
-        const courses = await Course.find().populate("coach", "name email");
+        const courses = await Course.find().populate("coachId", "name email");
         const filteredCourses = courses.filter((course) =>
-            course.coach.name.toLowerCase().includes(coachName.toLowerCase())
+            course.coachId.name.toLowerCase().includes(coachName.toLowerCase())
         );
 
         if (filteredCourses.length === 0) {
@@ -399,8 +398,8 @@ exports.getCoursesByCoachId = async (req, res) => {
     const coachId = req.params.coachId;
 
     try {
-        const courses = await Course.find({ coach: coachId }).populate(
-            "coach",
+        const courses = await Course.find({ coachId: coachId }).populate(
+            "coachId",
             "name email"
         );
 
@@ -427,7 +426,7 @@ exports.getCoursesByCoachId = async (req, res) => {
 };
 // Fonction pour obtenir les cours par ID de coach et date de création
 exports.getCoursesByCoachAndCreationDate = async (req, res) => {
-    const coachId = req.params.coachId;
+    const coach = req.params.coach;
     const { startDate, endDate } = req.query;
 
     try {
@@ -440,7 +439,7 @@ exports.getCoursesByCoachAndCreationDate = async (req, res) => {
         }
 
         const courses = await Course.find(query)
-            .populate("coach", "name email")
+            .populate("coachId", "name email")
             .sort({ createdAt: -1 });
 
         if (courses.length === 0) {
@@ -473,9 +472,9 @@ exports.getCoursesByCoachAndDescription = async (req, res) => {
 
     try {
         const courses = await Course.find({
-            coach: coachId,
+            coachId: coachId,
             description: { $regex: query, $options: "i" },
-        }).populate("coach", "name email");
+        }).populate("coachId", "name email");
 
         if (courses.length === 0) {
             return res.status(404).json({
@@ -506,12 +505,12 @@ exports.getCoursesByCoachAndName = async (req, res) => {
     const { coachName } = req.query;
 
     try {
-        const courses = await Course.find({ coach: coachId }).populate(
-            "coach",
+        const courses = await Course.find({ coachId: coachId }).populate(
+            "coachId",
             "name email"
         );
         const filteredCourses = courses.filter((course) =>
-            course.coach.name.toLowerCase().includes(coachName.toLowerCase())
+            course.coachId.name.toLowerCase().includes(coachName.toLowerCase())
         );
 
         if (filteredCourses.length === 0) {
@@ -543,9 +542,9 @@ exports.getCoursesByCoachAndPrice = async (req, res) => {
 
     try {
         const courses = await Course.find({
-            coach: coachId,
+            coachId: coachId,
             price: { $gte: minPrice || 0, $lte: maxPrice || Number.MAX_VALUE },
-        }).populate("coach", "name email");
+        }).populate("coachId", "name email");
         if (courses.length === 0) {
             return res.status(404).json({
                 message:

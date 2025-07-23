@@ -1,7 +1,9 @@
 // Middleware pour valider les données d'un cours
 
 module.exports = (req, res, next) => {
-    const { title, description, coachId, schedule, capacity } = req.body;
+    const { title, description, schedule, capacity } = req.body;
+    // Pour la création, le coach est injecté via req.user.id par le contrôleur
+    const coachId = req.body.coachId || (req.user && req.user.id);
     if (
         !title ||
         !description ||

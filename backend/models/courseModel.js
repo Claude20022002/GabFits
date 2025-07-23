@@ -12,7 +12,7 @@ const courseSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        coach: {
+        coachId: {
             type: mongoose.Schema.Types.ObjectId, // Reference à l'utilisateur qui est coach
             ref: "User",
             required: true,
