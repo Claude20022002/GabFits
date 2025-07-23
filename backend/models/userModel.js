@@ -9,9 +9,15 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        match: [/^\S+@\S+\.\S+$/, "Adresse email invalide"],
     },
     password: {
         type: String,
+        required: true,
+    },
+    role: {
+        type: String,
+        enum: ["membre", "coach", "admin"],
         required: true,
     },
     createdAt: {
@@ -19,5 +25,12 @@ const usersSchema = new mongoose.Schema({
         default: Date.now,
     },
 });
+
+// Méthode pour cacher le mot de passe
+usersSchema.methods.toJSON = function () {
+    const obj = this.toObject();
+    delete obj.password;
+    return obj;
+};
 
 module.exports = mongoose.model("User", usersSchema);
