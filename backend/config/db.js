@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const mongoDB = "mongodb://127.0.0.1/gabfits";
+const mongoDB = process.env.MONGO_URI || "mongodb://localhost:27017/gabfits";
 
 mongoose.connect(mongoDB, {
     useNewUrlParser: true,

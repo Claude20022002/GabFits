@@ -6,7 +6,8 @@ const { generateToken } = require("../utils/generateToken");
 // Enregistrement d'un nouvel utilisateur
 // Vérifie si l'utilisateur existe déjà et enregistre un nouvel utilisateur
 exports.register = async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role } = req.body; // recevoir les données du formulaire
+    // Vérification si l'utilisateur existe déjà
     try {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -14,8 +15,9 @@ exports.register = async (req, res) => {
                 .status(400)
                 .json({ message: "Utilisateur déjà inscrit." });
         }
-
+        // hachage du mot de passe avant de l'enregistrer
         const hashedPassword = await bcrypt.hash(password, 10);
+        // création de l'utilisateur
         const newUser = new User({
             name,
             email,
@@ -52,7 +54,7 @@ exports.login = async (req, res) => {
                 .json({ message: "Mot de passe ou email incorrect." });
         }
 
-        const token = generateToken(user._id);
+        const token = generateToken(user._id, user.name);
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // Utiliser secure en production
