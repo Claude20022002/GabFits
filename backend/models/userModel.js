@@ -17,7 +17,7 @@ const usersSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["membre", "coach", "admin"],
+        enum: ["member", "coach", "admin"], // anglais partout
         required: true,
     },
     createdAt: {
