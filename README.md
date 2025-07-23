@@ -98,3 +98,16 @@ fitzone-app/
 │ └── README.md
 │
 └── README.md # README global (monorepo)
+
+# Technogie utiliser
+
+-   React Js pour le front-End
+
+# Installation nécessaire
+
+```
+    npm install @mui/material @emotion/react @emotion/styled
+    npm install @tanstack/react-query @tanstack/react-table @tanstack/react-router
+    npm install react-router-dom axios
+
+```
