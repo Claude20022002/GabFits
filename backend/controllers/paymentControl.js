@@ -1,5 +1,7 @@
 const Payment = require("../models/paymentModel");
 
+// Créer un nouveau paiement
+// Reçoit les détails du paiement et enregistre dans la base de données
 exports.createPayment = async (req, res) => {
     try {
         const { userId, courseId, amount, paymentMethod } = req.body;
@@ -25,6 +27,20 @@ exports.createPayment = async (req, res) => {
         res.status(500).json({ message: "Erreur interne du serveur." });
     }
 };
+// Obtenir tous les paiements d'un utilisateur
+exports.getAllPayments = async (req, res) => {
+    try {
+        const payments = await Payment.find().populate("userId", "name email");
+        if (payments.length === 0) {
+            return res.status(404).json({ message: "Aucun paiement trouvé." });
+        }
+        res.status(200).json(payments);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des paiements:", error);
+        res.status(500).json({ message: "Erreur interne du serveur." });
+    }
+};
+// Obtenir les paiements d'un utilisateur spécifique
 exports.getPaymentsByUser = async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -42,11 +58,9 @@ exports.getPaymentsByUser = async (req, res) => {
         );
 
         if (payments.length === 0) {
-            return res
-                .status(404)
-                .json({
-                    message: "Aucun paiement trouvé pour cet utilisateur.",
-                });
+            return res.status(404).json({
+                message: "Aucun paiement trouvé pour cet utilisateur.",
+            });
         }
 
         res.status(200).json(payments);
@@ -55,6 +69,7 @@ exports.getPaymentsByUser = async (req, res) => {
         res.status(500).json({ message: "Erreur interne du serveur." });
     }
 };
+// Obtenir les détails d'un paiement spécifique
 exports.getPaymentDetails = async (req, res) => {
     try {
         const paymentId = req.params.paymentId;
@@ -83,6 +98,7 @@ exports.getPaymentDetails = async (req, res) => {
         res.status(500).json({ message: "Erreur interne du serveur." });
     }
 };
+// Mettre à jour le statut du paiement
 exports.updatePaymentStatus = async (req, res) => {
     try {
         const paymentId = req.params.paymentId;
@@ -90,11 +106,9 @@ exports.updatePaymentStatus = async (req, res) => {
 
         // Validate paymentId and status
         if (!paymentId || !status) {
-            return res
-                .status(400)
-                .json({
-                    message: "L'ID de paiement et le statut sont requis.",
-                });
+            return res.status(400).json({
+                message: "L'ID de paiement et le statut sont requis.",
+            });
         }
 
         const validStatuses = ["pending", "completed", "failed"];
@@ -121,6 +135,7 @@ exports.updatePaymentStatus = async (req, res) => {
         res.status(500).json({ message: "Erreur interne du serveur." });
     }
 };
+// Supprimer un paiement
 exports.deletePayment = async (req, res) => {
     try {
         const paymentId = req.params.paymentId;
