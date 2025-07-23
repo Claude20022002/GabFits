@@ -5,6 +5,7 @@ const bookingController = require("../controllers/bookingControl");
 const auth = require("../middlewares/auth");
 const admin = require("../middlewares/admin");
 const bookingValidator = require("../middlewares/bookingValidator");
+
 // Créer une réservation
 router.post("/create", auth, bookingValidator, bookingController.createBooking);
 // Obtenir toutes les réservations
@@ -21,23 +22,27 @@ router.put(
 );
 // Supprimer une réservation
 router.delete("/:id", auth, admin, bookingController.deleteBooking);
-// Rechercher des réservations par utilisateur
+// Obtenir les réservations d'un utilisateur par son ID
 router.get("/user/:userId", auth, bookingController.getBookingsByUser);
-// Rechercher des réservations par cours
+// Obtenir les réservations d'un cours par son ID
 router.get("/course/:courseId", auth, bookingController.getBookingsByCourse);
-// Rechercher des réservations par statut
+// Obtenir les réservations par statut
 router.get("/status/:status", auth, bookingController.getBookingsByStatus);
-// Rechercher des réservations par date de réservation
+// Obtenir les réservations par date de réservation
 router.get(
     "/booking-date/:date",
     auth,
     bookingController.getBookingsByBookingDate
 );
-// Rechercher des réservations par date de création
+// Obtenir les réservations par date de création
 router.get(
     "/creation-date/:date",
     auth,
     bookingController.getBookingsByCreationDate
 );
+// Annuler une réservation
+router.post("/:id/cancel", auth, bookingController.cancelBooking);
+// Confirmer une réservation
+router.post("/:id/confirm", auth, bookingController.confirmBooking);
 
 module.exports = router;
