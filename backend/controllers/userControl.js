@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+// Middleware pour générer un token JWT
+const { generateToken } = require("../utils/generateToken");
 
 // Enregistrement d'un nouvel utilisateur
 // Vérifie si l'utilisateur existe déjà et enregistre un nouvel utilisateur
@@ -51,8 +52,11 @@ exports.login = async (req, res) => {
                 .json({ message: "Mot de passe ou email incorrect." });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN || "2h",
+        const token = generateToken(user._id);
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production", // Utiliser secure en production
+            sameSite: "Strict", // Sécuriser le cookie
         });
 
         res.status(200).json({ message: "Connexion réussie", token });
