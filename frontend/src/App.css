@@ -1,0 +1,14 @@
+header nav ul li {
+    transition: all 0.3s ease-in-out;
+    padding: 10px 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Appliquer un effet au survol de tous les éléments sauf le dernier */
+header nav ul li:not(:last-child):hover {
+    color: rgb(226, 80, 43);
+    background-color: rgb(187, 199, 206);
+}

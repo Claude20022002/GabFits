@@ -1,10 +1,6 @@
-import Login from "../auth/Login";
+import { Stack } from "@mui/material";
+import React from "react";
 
 export default function Home() {
-    return (
-        <div>
-            Home
-            <Login />
-        </div>
-    );
+    return <Stack sx={{ paddingTop: "60px", marginTop: "60px" }}>Home</Stack>;
 }
