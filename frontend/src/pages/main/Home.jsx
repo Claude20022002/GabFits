@@ -1,5 +1,10 @@
-import React from "react";
+import Login from "../auth/Login";
 
 export default function Home() {
-    return <div>Home</div>;
+    return (
+        <div>
+            Home
+            <Login />
+        </div>
+    );
 }
