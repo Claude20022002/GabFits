@@ -146,6 +146,6 @@ export default function Sidebar() {
 2. Le hamburger (hamburger-react) contrôle l'état "isOpen" du Drawer.
 3. Sur desktop (md et +) le menu est affiché directement en ligne avec un Stack horizontal.
 4. Sur mobile (xs à sm), le menu est masqué et accessible uniquement via le Drawer.
-5. Le Drawer est stylisé avec PaperProps (largeur, couleur, padding).
+5. Le Drawer est stylisé avec slotProps (largeur, couleur, padding).
 6. Chaque clic sur un lien ferme le Drawer automatiquement pour améliorer l'expérience utilisateur.
 */
