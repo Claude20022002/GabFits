@@ -1,12 +1,13 @@
 import { Button, Stack, Typography, Drawer, Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Hamburger from "hamburger-react";
 
 export default function Sidebar() {
     const [etatBouton, setEtatBouton] = useState("Connexion");
-    const [isOpen, setIsOpen] = useState(false); // gère le Drawer
+    const [isOpen, setIsOpen] = useState(false);
+    const hamburgerRef = useRef(null); // Ref pour focus
 
     const toggleButtonState = () => {
         setEtatBouton((prevState) =>
@@ -23,9 +24,16 @@ export default function Sidebar() {
         "Contact",
     ];
 
+    const handleCloseDrawer = () => {
+        setIsOpen(false);
+        setTimeout(() => {
+            hamburgerRef.current?.focus();
+        }, 100);
+    };
+
     return (
         <Stack component="nav" sx={{ padding: "10px" }}>
-            {/* Bouton hamburger visible uniquement sur mobile */}
+            {/* Bouton hamburger pour mobile */}
             <Stack sx={{ display: { xs: "flex", md: "none" } }}>
                 <Hamburger
                     toggled={isOpen}
@@ -33,10 +41,11 @@ export default function Sidebar() {
                     color="#fff"
                     size={30}
                     label="Menu"
+                    ref={hamburgerRef}
                 />
             </Stack>
 
-            {/* Menu Desktop toujours visible */}
+            {/* Menu desktop */}
             <Stack
                 component="ul"
                 direction="row"
@@ -76,17 +85,18 @@ export default function Sidebar() {
                 </Stack>
             </Stack>
 
-            {/* Drawer pour mobile */}
+            {/* Drawer mobile */}
             <Drawer
                 anchor="right"
                 open={isOpen}
-                onClose={() => setIsOpen(false)}
+                onClose={handleCloseDrawer}
+                ModalProps={{ keepMounted: true }}
                 slotProps={{
                     paper: {
                         sx: {
-                            backgroundColor: "#111", // fond sombre
+                            backgroundColor: "#111",
                             color: "#fff",
-                            width: "250px", // largeur du menu
+                            width: "250px",
                             padding: "20px",
                         },
                     },
@@ -98,7 +108,6 @@ export default function Sidebar() {
                         listStyle: "none",
                         padding: 0,
                         margin: 0,
-                        justifyContent: "center",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
@@ -109,13 +118,27 @@ export default function Sidebar() {
                         <Box
                             component="li"
                             key={index}
-                            sx={{ marginBottom: "15px", cursor: "pointer" }}
-                            onClick={() => setIsOpen(false)}
+                            sx={{
+                                marginBottom: "15px",
+                                cursor: "pointer",
+                                "&:hover": {
+                                    color: "rgb(226, 80, 43)",
+                                    backgroundColor: "rgb(187, 199, 206)",
+                                },
+                                width: "100%",
+                                textAlign: "center",
+                                borderRadius: "5px",
+                                padding: "5px 0",
+                            }}
+                            onClick={handleCloseDrawer}
                         >
                             <Typography variant="h6">{item}</Typography>
                         </Box>
                     ))}
-                    <Box component="li" sx={{ marginTop: "20px" }}>
+                    <Box
+                        component="li"
+                        sx={{ marginTop: "20px", width: "100%" }}
+                    >
                         <Button
                             fullWidth
                             variant="contained"
@@ -142,10 +165,9 @@ export default function Sidebar() {
 
 /*
 📌 Explications :
-1. On utilise MUI Drawer pour créer un menu coulissant depuis la droite sur mobile.
-2. Le hamburger (hamburger-react) contrôle l'état "isOpen" du Drawer.
-3. Sur desktop (md et +) le menu est affiché directement en ligne avec un Stack horizontal.
-4. Sur mobile (xs à sm), le menu est masqué et accessible uniquement via le Drawer.
-5. Le Drawer est stylisé avec slotProps (largeur, couleur, padding).
-6. Chaque clic sur un lien ferme le Drawer automatiquement pour améliorer l'expérience utilisateur.
+1. Drawer mobile avec keepMounted pour éviter le problème aria-hidden.
+2. Ref sur le bouton hamburger pour restaurer le focus après fermeture.
+3. Menu desktop affiché en flex horizontal, masqué sur mobile.
+4. slotProps.paper utilisé à la place de PaperProps (API récente MUI).
+5. Chaque lien ferme le Drawer pour meilleure UX mobile.
 */
