@@ -11,4 +11,5 @@ header nav ul li {
 header nav ul li:not(:last-child):hover {
     color: rgb(226, 80, 43);
     background-color: rgb(187, 199, 206);
+    cursor: pointer;
 }
