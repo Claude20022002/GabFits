@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import "./styleSectionFirst.css";
 
 export default function SectionPremiereHome() {
     const backgroundImage = {
@@ -29,11 +30,11 @@ export default function SectionPremiereHome() {
         <Stack
             className="section-premiere-home"
             sx={{
-                paddingTop: "60px",
+                padding: "60px 0",
                 backgroundImage: images[index],
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                minHeight: "500px", // pour voir l'image
+                minHeight: "450px", // pour voir l'image
                 color: "#fff",
             }}
         >
@@ -42,7 +43,7 @@ export default function SectionPremiereHome() {
                 sx={{ textAlign: "center", padding: "20px" }}
             >
                 <Typography variant="h4" sx={{ marginTop: "20px" }}>
-                    Welcome to GabFits
+                    Welcome to Gab<span style={{ color: "#da1d25" }}>Fits</span>
                 </Typography>
                 <Typography
                     variant="h1"
@@ -59,6 +60,32 @@ export default function SectionPremiereHome() {
                     workout plans to nutrition tips.
                 </Typography>
             </Box>
+            <Stack
+                className="section-premiere-home-button"
+                sx={{
+                    width: "100%",
+                    padding: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "row",
+                    gap: "20px",
+                }}
+            >
+                <Button
+                    variant="contained"
+                    sx={{ backgroundColor: "#da1d25" }}
+                    size="large"
+                >
+                    Get Started
+                </Button>
+                <Button
+                    variant="contained"
+                    sx={{ backgroundColor: "#da1d25" }}
+                    size="large"
+                >
+                    Contact Us
+                </Button>
+            </Stack>
         </Stack>
     );
 }

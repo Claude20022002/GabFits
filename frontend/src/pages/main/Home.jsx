@@ -4,7 +4,7 @@ import SectionPremiereHome from "../../components/blocs/SectionPremiereHome";
 
 export default function Home() {
     return (
-        <Stack sx={{ paddingTop: "60px", marginTop: "60px" }}>
+        <Stack sx={{ paddingTop: "60px", marginTop: "20px" }}>
             <SectionPremiereHome />
         </Stack>
     );
