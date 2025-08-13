@@ -3,9 +3,9 @@ import { Box, Stack, Typography } from "@mui/material";
 
 export default function SectionPremiereHome() {
     const backgroundImage = {
-        firstBackgroundImage: 'url("/imageBackground/font1.jpg")',
-        secondBackgroundImage: 'url("/imageBackground/font2.jpg")',
-        thirdBackgroundImage: 'url("/imageBackground/font3.jpg")',
+        firstBackgroundImage: 'url("/imageBackground/fond1.jpg")',
+        secondBackgroundImage: 'url("/imageBackground/fond2.jpg")',
+        thirdBackgroundImage: 'url("/imageBackground/fond3.jpg")',
     };
 
     const images = [
@@ -30,7 +30,6 @@ export default function SectionPremiereHome() {
             className="section-premiere-home"
             sx={{
                 paddingTop: "60px",
-                marginTop: "30px",
                 backgroundImage: images[index],
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -45,7 +44,14 @@ export default function SectionPremiereHome() {
                 <Typography variant="h4" sx={{ marginTop: "20px" }}>
                     Welcome to GabFits
                 </Typography>
-                <Typography variant="h1" sx={{ marginTop: "20px" }}>
+                <Typography
+                    variant="h1"
+                    sx={{
+                        marginTop: "20px",
+                        color: "#da1d25",
+                        fontWeight: "bold",
+                    }}
+                >
                     Your Fitness Journey Starts Here
                 </Typography>
                 <Typography variant="body1" sx={{ marginTop: "20px" }}>
