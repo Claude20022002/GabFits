@@ -4,9 +4,9 @@ import "./styleSectionFirst.css";
 
 export default function SectionPremiereHome() {
     const backgroundImage = {
-        firstBackgroundImage: 'url("/imageBackground/fond1.jpg")',
-        secondBackgroundImage: 'url("/imageBackground/fond2.jpg")',
-        thirdBackgroundImage: 'url("/imageBackground/fond3.jpg")',
+        firstBackgroundImage: 'url("/image_Background/fond1.jpg")',
+        secondBackgroundImage: 'url("/image_Background/fond2.jpg")',
+        thirdBackgroundImage: 'url("/image_Background/fond3.jpg")',
     };
 
     const images = [
@@ -34,8 +34,11 @@ export default function SectionPremiereHome() {
                 backgroundImage: images[index],
                 backgroundSize: "cover",
                 backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
                 minHeight: "450px", // pour voir l'image
                 color: "#fff",
+                position: "relative",
+                zIndex: 1,
             }}
         >
             <Box
@@ -76,11 +79,16 @@ export default function SectionPremiereHome() {
                     sx={{ backgroundColor: "#da1d25" }}
                     size="large"
                 >
-                    Get Started
+                    Read more
                 </Button>
                 <Button
-                    variant="contained"
-                    sx={{ backgroundColor: "#da1d25" }}
+                    variant="outlined"
+                    sx={{
+                        color: "#fff",
+                        borderColor: "#fff",
+                        borderWidth: "1px",
+                        borderStyle: "solid",
+                    }}
                     size="large"
                 >
                     Contact Us
