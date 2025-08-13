@@ -61,6 +61,16 @@ export default function SectionDeuxiemeHome() {
                             borderColor: "#da1d25",
                             borderWidth: "1px",
                             borderStyle: "solid",
+                            transition: "background-color 0.3s, color 0.3s",
+                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                            "&:focus": {
+                                outline: "none",
+                                boxShadow: "0 0 0 3px rgba(218, 29, 37, 0.5)",
+                            },
+                            "&:hover": {
+                                backgroundColor: "#da1d25",
+                                color: "#fff",
+                            },
                         }}
                         size="large"
                     >

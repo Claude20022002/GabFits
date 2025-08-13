@@ -2,25 +2,26 @@ import { Button, Stack, Typography, Drawer, Box } from "@mui/material";
 import React, { useState, useRef } from "react";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import LogoutIcon from "@mui/icons-material/Logout";
 import Hamburger from "hamburger-react";
 
 export default function Sidebar() {
-    const [etatBouton, setEtatBouton] = useState("Connexion");
+    const [etatBouton, setEtatBouton] = useState("Log In");
     const [isOpen, setIsOpen] = useState(false);
     const hamburgerRef = useRef(null); // Ref pour focus
 
     const toggleButtonState = () => {
         setEtatBouton((prevState) =>
-            prevState === "Connexion" ? "Déconnexion" : "Connexion"
+            prevState === "Log In" ? "Log Out" : "Log In"
         );
     };
 
     const menuItems = [
-        "Accueil",
-        "Cours",
-        "Coachs",
-        "Tarifs",
-        "Témoignage",
+        "Home",
+        "Courses",
+        "Coaches",
+        "Pricing",
+        "Testimonials",
         "Contact",
     ];
 
@@ -70,13 +71,13 @@ export default function Sidebar() {
                 <Stack component="li">
                     <Button
                         variant="contained"
-                        color={etatBouton === "Connexion" ? "success" : "error"}
+                        color={etatBouton === "Log In" ? "success" : "error"}
                         onClick={toggleButtonState}
                         startIcon={
-                            etatBouton === "Connexion" ? (
+                            etatBouton === "Log In" ? (
                                 <LoginIcon />
                             ) : (
-                                <PersonAddIcon />
+                                <LogoutIcon />
                             )
                         }
                     >
@@ -143,14 +144,14 @@ export default function Sidebar() {
                             fullWidth
                             variant="contained"
                             color={
-                                etatBouton === "Connexion" ? "success" : "error"
+                                etatBouton === "Log In" ? "success" : "error"
                             }
                             onClick={toggleButtonState}
                             startIcon={
-                                etatBouton === "Connexion" ? (
+                                etatBouton === "Log In" ? (
                                     <LoginIcon />
                                 ) : (
-                                    <PersonAddIcon />
+                                    <LogoutIcon />
                                 )
                             }
                         >
